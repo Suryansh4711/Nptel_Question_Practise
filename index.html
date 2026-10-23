@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f7f7fb" />
+  <meta name="description" content="A simple mobile-friendly Management Information Systems MCQ practice website for Weeks 1–12." />
+  <title>MIS MCQ Practice</title>
+  <style>
+    :root {
+      --bg: #f7f7fb; --card: #ffffff; --ink: #202236; --muted: #70738a;
+      --line: #e7e8f0; --purple: #6c63ff; --purple-dark: #5148e5;
+      --purple-soft: #efeeff; --green: #16834a; --green-bg: #e9f8ef;
+      --red: #c83747; --red-bg: #fff0f1; --shadow: 0 12px 36px rgba(31, 33, 67, .07);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.5; }
+    button { font: inherit; cursor: pointer; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 22px 18px 44px; }
+    header { display:flex; justify-content:space-between; align-items:center; gap:14px; margin-bottom:28px; }
+    .brand { display:flex; align-items:center; gap:11px; min-width:0; }
+    .brand-icon { display:grid; place-items:center; width:43px; height:43px; border-radius:14px; background:var(--purple); color:white; font-size:21px; box-shadow:0 6px 15px #6c63ff38; }
+    .brand-name { font-size:17px; font-weight:800; letter-spacing:-.4px; }
+    .brand-sub { color:var(--muted); font-size:12px; margin-top:1px; }
+    .pill { background:#fff; border:1px solid var(--line); padding:8px 12px; border-radius:999px; font-size:12px; color:var(--muted); white-space:nowrap; }
+    .hero { background:linear-gradient(120deg,#6c63ff,#8879ff); color:white; border-radius:25px; padding:30px; position:relative; overflow:hidden; box-shadow:var(--shadow); }
+    .hero:after { content:""; position:absolute; width:240px; height:240px; border:38px solid #ffffff12; border-radius:50%; right:-55px; top:-100px; pointer-events:none; }
+    .eyebrow { font-size:12px; text-transform:uppercase; letter-spacing:1.5px; font-weight:800; opacity:.85; }
+    h1 { font-size:clamp(27px,5vw,42px); line-height:1.1; margin:10px 0 12px; letter-spacing:-1.2px; max-width:590px; }
+    .hero p { margin:0; max-width:570px; color:#f0efff; font-size:15px; }
+    .hero-bottom { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; align-items:center; }
+    .hero-stat { background:#ffffff20; border:1px solid #ffffff30; padding:8px 12px; border-radius:12px; font-size:13px; }
+    .hero .btn-primary { background:white; color:var(--purple-dark); }
+    .btn { border:0; border-radius:13px; padding:12px 17px; font-weight:750; transition:transform .12s, opacity .12s; }
+    .btn:active { transform:scale(.98); }
+    .btn-primary { background:var(--purple); color:white; }
+    .btn-primary:hover { background:var(--purple-dark); }
+    .btn-secondary { background:white; color:var(--ink); border:1px solid var(--line); }
+    .section-heading { display:flex; justify-content:space-between; align-items:end; gap:12px; margin:28px 2px 14px; }
+    .section-heading h2 { font-size:20px; margin:0; letter-spacing:-.5px; }
+    .section-heading p { color:var(--muted); font-size:13px; margin:4px 0 0; }
+    .week-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:13px; }
+    .week-card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:17px; text-align:left; color:var(--ink); box-shadow:0 3px 12px #25264b05; min-height:120px; transition:border .15s, transform .15s, box-shadow .15s; }
+    .week-card:hover { border-color:#b6b2ff; transform:translateY(-2px); box-shadow:var(--shadow); }
+    .week-top { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+    .week-number { font-size:11px; font-weight:800; color:var(--purple); background:var(--purple-soft); padding:5px 8px; border-radius:8px; }
+    .week-arrow { color:#a1a2b4; font-size:19px; }
+    .week-title { font-size:15px; font-weight:800; margin:12px 0 3px; }
+    .week-meta { font-size:12px; color:var(--muted); }
+    .all-card { grid-column:1/-1; display:flex; align-items:center; justify-content:space-between; gap:12px; background:#fff; border:1px dashed #c9c6ff; border-radius:17px; padding:16px 18px; }
+    .all-card strong { display:block; font-size:15px; }
+    .all-card span { color:var(--muted); font-size:12px; }
+    .all-card .btn { flex-shrink:0; }
+    .footer { text-align:center; color:#9698aa; font-size:12px; padding:26px 0 0; }
+    .quiz-shell { max-width:760px; margin:0 auto; }
+    .back-link { border:0; padding:7px 0; background:transparent; color:var(--muted); font-weight:700; margin-bottom:15px; }
+    .quiz-top { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:13px; }
+    .quiz-label { font-size:13px; color:var(--muted); font-weight:700; }
+    .score-pill { background:var(--purple-soft); color:var(--purple-dark); padding:7px 11px; border-radius:10px; font-size:12px; font-weight:800; }
+    .progress-track { height:7px; border-radius:99px; background:#e8e8f2; overflow:hidden; margin-bottom:22px; }
+    .progress-fill { height:100%; width:0%; background:var(--purple); border-radius:99px; transition:width .2s; }
+    .question-card { background:white; border:1px solid var(--line); border-radius:22px; padding:clamp(20px,4vw,31px); box-shadow:var(--shadow); }
+    .q-kicker { font-size:12px; color:var(--purple); font-weight:850; letter-spacing:.5px; margin-bottom:11px; }
+    .question { font-size:clamp(19px,3.5vw,25px); line-height:1.4; letter-spacing:-.45px; font-weight:800; margin:0 0 22px; white-space:pre-wrap; }
+    .options { display:grid; gap:11px; }
+    .option { display:flex; align-items:flex-start; gap:12px; width:100%; border:1.5px solid var(--line); border-radius:14px; padding:13px 14px; background:#fff; text-align:left; color:var(--ink); line-height:1.45; }
+    .option:hover:not(:disabled) { border-color:#aaa5ff; background:#faf9ff; }
+    .option:disabled { cursor:default; }
+    .letter { flex:0 0 27px; height:27px; display:grid; place-items:center; border-radius:8px; background:#f0f0f6; color:#696b82; font-size:12px; font-weight:850; text-transform:uppercase; }
+    .option-text { padding-top:2px; }
+    .option.correct { border-color:#42b878; background:var(--green-bg); color:#116d3b; }
+    .option.correct .letter { background:#c9f0d8; color:#116d3b; }
+    .option.wrong { border-color:#e26b77; background:var(--red-bg); color:#a32334; }
+    .option.wrong .letter { background:#ffd8dc; color:#a32334; }
+    .feedback { display:none; margin-top:18px; padding:15px 16px; border-radius:14px; font-size:14px; }
+    .feedback.show { display:block; }
+    .feedback.good { background:var(--green-bg); color:#116d3b; }
+    .feedback.bad { background:var(--red-bg); color:#a32334; }
+    .feedback strong { display:block; margin-bottom:3px; }
+    .quiz-actions { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:21px; }
+    .hint { color:var(--muted); font-size:12px; }
+    .result-card { background:white; border:1px solid var(--line); border-radius:22px; padding:30px 22px; text-align:center; box-shadow:var(--shadow); }
+    .result-icon { width:70px; height:70px; margin:0 auto 16px; display:grid; place-items:center; border-radius:22px; background:var(--green-bg); font-size:34px; }
+    .result-card h2 { margin:0 0 8px; font-size:27px; letter-spacing:-.7px; }
+    .result-card p { color:var(--muted); margin:0 auto 20px; max-width:440px; }
+    .result-score { font-size:44px; font-weight:900; color:var(--purple); letter-spacing:-1.5px; margin:7px 0; }
+    .result-actions { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; }
+    .hidden { display:none !important; }
+    @media(max-width:680px) {
+      .wrap { padding:15px 13px 30px; }
+      header { margin-bottom:19px; }
+      .hero { padding:24px 20px; border-radius:21px; }
+      .hero p { font-size:14px; }
+      .hero-bottom { align-items:stretch; }
+      .hero-bottom .btn { width:100%; }
+      .week-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+      .week-card { min-height:112px; padding:13px; }
+      .week-title { font-size:14px; }
+      .all-card { grid-column:1/-1; align-items:flex-start; flex-direction:column; }
+      .all-card .btn { width:100%; }
+      .section-heading { margin-top:24px; }
+      .question-card { border-radius:18px; }
+      .quiz-actions .btn { padding:12px 14px; }
+      .hint { max-width:120px; }
+    }
+    @media(max-width:360px) { .week-grid { grid-template-columns:1fr; } .week-card { min-height:100px; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">✓</div>
+        <div>
+          <div class="brand-name">MIS MCQ Practice</div>
+          <div class="brand-sub">Weeks 1–12 · Quick revision</div>
+        </div>
+      </div>
+      <div class="pill">120 questions</div>
+    </header>
+
+    <main>
+      <section id="home">
+        <div class="hero">
+          <div class="eyebrow">A little practice goes a long way</div>
+          <h1>One question at a time.<br>You've got this.</h1>
+          <p>Practice the Management Information Systems MCQs from all 12 weeks. Pick a week or take the full set. Your questions and options shuffle every time you retry.</p>
+          <div class="hero-bottom">
+            <div class="hero-stat">12 weeks</div>
+            <div class="hero-stat">10 questions each</div>
+            <div class="hero-stat">Instant answers</div>
+          </div>
+        </div>
+        <div class="section-heading">
+          <div><h2>Choose a week</h2><p>Practice one assignment at a time.</p></div>
+        </div>
+        <div id="weekGrid" class="week-grid"></div>
+        <div class="footer">Made for focused revision · Works on mobile and desktop</div>
+      </section>
+
+      <section id="quiz" class="quiz-shell hidden">
+        <button class="back-link" id="backBtn">← All weeks</button>
+        <div class="quiz-top">
+          <div><div class="quiz-label" id="quizWeek">Week 1</div><div class="quiz-label" id="quizCounter">Question 1 of 10</div></div>
+          <div class="score-pill" id="scorePill">Score: 0</div>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="question-card">
+          <div class="q-kicker" id="qKicker">QUESTION 01</div>
+          <h2 class="question" id="questionText"></h2>
+          <div class="options" id="options"></div>
+          <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+          <div class="quiz-actions">
+            <div class="hint" id="hint">Choose the best answer.</div>
+            <button class="btn btn-primary hidden" id="nextBtn">Next question →</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="results" class="quiz-shell hidden">
+        <div class="result-card">
+          <div class="result-icon" id="resultIcon">🎉</div>
+          <div class="eyebrow" style="color:var(--purple)">Practice complete</div>
+          <h2 id="resultTitle">Nice work!</h2>
+          <div class="result-score" id="resultScore">8/10</div>
+          <p id="resultText">Every question you practise is progress.</p>
+          <div class="result-actions">
+            <button class="btn btn-primary" id="retryBtn">Retry & shuffle ↻</button>
+            <button class="btn btn-secondary" id="homeBtn">Choose another week</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script>
+    const QUESTIONS = [{"week": 1, "question": "What is the primary goal of MIS?", "options": ["Increase hardware sales", "Generate raw data", "Transform data into useful information for decision-making", "Replace managers"], "answer": 2, "id": "week-1-q1"}, {"week": 1, "question": "Which of the following represents the correct hierarchy?", "options": ["Wisdom → Knowledge → Information → Data", "Data → Information → Knowledge → Wisdom", "Information → Data → Wisdom → Knowledge", "Knowledge → Data → Information → Wisdom"], "answer": 1, "id": "week-1-q2"}, {"week": 1, "question": "Data can best be described as:", "options": ["Processed facts", "Meaningful insights", "Raw facts and figures", "Strategic decisions"], "answer": 2, "id": "week-1-q3"}, {"week": 1, "question": "Information is:", "options": ["Unprocessed data", "Data arranged in a meaningful form", "A collection of hardware devices", "Organizational culture"], "answer": 1, "id": "week-1-q4"}, {"week": 1, "question": "Which activity captures raw data in an information system?", "options": ["Processing", "Feedback", "Input", "Output"], "answer": 2, "id": "week-1-q5"}, {"week": 1, "question": "Which activity converts raw data into meaningful information?", "options": ["Feedback", "Processing", "Input", "Distribution"], "answer": 1, "id": "week-1-q6"}, {"week": 1, "question": "The output of an information system is primarily used for:", "options": ["Data collection", "Data storage", "Decision-making and actions", "Hardware maintenance"], "answer": 2, "id": "week-1-q7"}, {"week": 1, "question": "Feedback in an information system is used to:", "options": ["Increase storage capacity", "Correct or evaluate inputs", "Replace processing", "Eliminate outputs"], "answer": 1, "id": "week-1-q8"}, {"week": 1, "question": "Computers and software are considered:", "options": ["Complete information systems", "Organizational assets", "Technical foundations of information systems", "Decision makers"], "answer": 2, "id": "week-1-q9"}, {"week": 1, "question": "Which technology trend is highlighted as transforming business?", "options": ["Typewriters", "Mobile digital platforms", "Telegraph systems", "Mechanical calculators"], "answer": 1, "id": "week-1-q10"}, {"week": 2, "question": "What is the smallest unit of data a computer can handle?", "options": ["Byte", "Field", "Bit", "Record"], "answer": 2, "id": "week-2-q1"}, {"week": 2, "question": "A collection of related files is known as:", "options": ["Record", "Field", "Database", "Byte"], "answer": 2, "id": "week-2-q2"}, {"week": 2, "question": "An entity can be best described as:", "options": ["A software package", "A person, place, or thing about which data is stored", "A collection of records", "A database query"], "answer": 1, "id": "week-2-q3"}, {"week": 2, "question": "Which of the following is an attribute of a STUDENT entity?", "options": ["Database", "Grade", "Folder", "File"], "answer": 1, "id": "week-2-q4"}, {"week": 2, "question": "Data redundancy refers to:", "options": ["Missing data", "Duplicate data stored in multiple files", "Incorrect data entry", "Unauthorized access"], "answer": 1, "id": "week-2-q5"}, {"week": 2, "question": "Data inconsistency occurs when:", "options": ["Data is encrypted", "Data is stored in a warehouse", "Same attribute has different values", "Data is normalized"], "answer": 2, "id": "week-2-q6"}, {"week": 2, "question": "A primary key is used for:", "options": ["Data backup", "Data compression", "Unique identification of records", "Data mining"], "answer": 2, "id": "week-2-q7"}, {"week": 2, "question": "A DBMS acts as:", "options": ["A spreadsheet tool", "An interface between applications and databases", "A programming language", "A web browser"], "answer": 1, "id": "week-2-q8"}, {"week": 2, "question": "One major advantage of DBMS is:", "options": ["Increased redundancy", "Reduces inconsistency", "Reduced storage capacity", "Decentralized security"], "answer": 1, "id": "week-2-q9"}, {"week": 2, "question": "Which is a major BI tool?", "options": ["OLAP", "Compiler", "Antivirus", "Browser"], "answer": 0, "id": "week-2-q10"}, {"week": 3, "question": "SAP stands for:", "options": ["Systems Applications & Products in Data Processing", "Standard Applications Processing", "Systems and Products Platform", "Software Applications Processing"], "answer": 0, "id": "week-3-q1"}, {"week": 3, "question": "SAP R/3 follows:", "options": ["Two-tier architecture", "Four-tier architecture", "Three-tier architecture", "Single-tier architecture"], "answer": 2, "id": "week-3-q2"}, {"week": 3, "question": "In SAP R/3, GUI components belong to:", "options": ["Database layer", "Application layer", "Presentation layer", "Middleware layer"], "answer": 2, "id": "week-3-q3"}, {"week": 3, "question": "A key business benefit expected from ERP is:", "options": ["Increased inventory levels", "Integrated supply chain management", "Increased manual effort", "More isolated systems"], "answer": 1, "id": "week-3-q4"}, {"week": 3, "question": "ERP helps reduce:", "options": ["Order-to-cash cycle time", "Data availability", "Productivity", "Automation"], "answer": 0, "id": "week-3-q5"}, {"week": 3, "question": "ERP facilitates:", "options": ["Business Process Reengineering (BPR)", "Data duplication", "Information silos", "Stand-alone processing"], "answer": 0, "id": "week-3-q6"}, {"week": 3, "question": "ERP affects:", "options": ["Business processes", "Company culture", "Employee skills", "All of the above"], "answer": 3, "id": "week-3-q7"}, {"week": 3, "question": "ERP can reduce costs through:", "options": ["Better supplier management", "Increased redundancy", "More manual work", "Separate purchasing systems"], "answer": 0, "id": "week-3-q8"}, {"week": 3, "question": "A common reason for ERP project risk is:", "options": ["Strong top management support", "Inexperienced core team", "Stable requirements", "High computer literacy"], "answer": 1, "id": "week-3-q9"}, {"week": 3, "question": "A limitation of traditional MRP was:", "options": ["Lack of planning capability", "Ignoring available capacity during planning", "Too much HR integration", "Real-time collaboration"], "answer": 1, "id": "week-3-q10"}, {"week": 4, "question": "SCM involves which two major flows?", "options": ["Product and profit flow", "Material flow and information flow", "Cash flow and tax flow", "Labor flow and energy flow"], "answer": 1, "id": "week-4-q1"}, {"week": 4, "question": "A supply chain is best described as a:", "options": ["Single manufacturing unit", "Distribution warehouse", "Network of resources, organizations, technologies, and processes", "Marketing department"], "answer": 2, "id": "week-4-q2"}, {"week": 4, "question": "One method of reducing the bullwhip effect is to:", "options": ["Increase batch sizes", "Improve communication across the supply chain", "Reduce information sharing", "Increase shortages"], "answer": 1, "id": "week-4-q3"}, {"week": 4, "question": "Demand-driven supply chains use a:", "options": ["Push system", "Pull system", "Manual system", "Forecast-only system"], "answer": 1, "id": "week-4-q4"}, {"week": 4, "question": "In a Just-in-Time (JIT) strategy, components arrive:", "options": ["Months before production", "After product delivery", "As they are needed", "At fixed yearly intervals"], "answer": 2, "id": "week-4-q5"}, {"week": 4, "question": "Which supply chain consists of suppliers and suppliers’ suppliers?", "options": ["Internal supply chain", "Downstream supply chain", "Upstream supply chain", "Retail supply chain"], "answer": 2, "id": "week-4-q6"}, {"week": 4, "question": "The downstream supply chain focuses on:", "options": ["Raw material suppliers", "Internal warehouses", "Product delivery to customers", "Employee management"], "answer": 2, "id": "week-4-q7"}, {"week": 4, "question": "Internal supply chain activities occur:", "options": ["Between countries", "Inside the factory", "Only with customers", "Only with suppliers"], "answer": 1, "id": "week-4-q8"}, {"week": 4, "question": "The bullwhip effect occurs when:", "options": ["Inventory is eliminated", "Demand information gets distorted along the supply chain", "Production exceeds quality standards", "Warehouses are automated"], "answer": 1, "id": "week-4-q9"}, {"week": 4, "question": "A push-based model is also known as:", "options": ["Build-to-order", "Build-to-stock", "Demand-driven", "Pull-based"], "answer": 1, "id": "week-4-q10"}, {"week": 5, "question": "A company manufactures customized industrial machinery only after receiving confirmed customer orders. This production strategy is best classified as:", "options": ["Make-to-stock", "Continuous production", "Make-to-order", "Batch processing"], "answer": 2, "id": "week-5-q1"}, {"week": 5, "question": "In a manufacturing information system, which document formally authorizes the start of production?", "options": ["Goods receipt note", "Production order", "Sales quotation", "Purchase requisition"], "answer": 1, "id": "week-5-q2"}, {"week": 5, "question": "Which of the following would be considered a tactical information requirement for manufacturing management?", "options": ["Long-term product design decisions", "Factory location planning", "Quality control measures", "Corporate acquisition strategy"], "answer": 2, "id": "week-5-q3"}, {"week": 5, "question": "A production manager wants to identify the optimal product mix under limited machine capacity. This decision falls under:", "options": ["Strategic information", "Tactical information", "Operational information", "Transaction processing"], "answer": 1, "id": "week-5-q4"}, {"week": 5, "question": "Which statement best explains the difference between independent and dependent demand?", "options": ["Independent demand is derived from BOM requirements.", "Dependent demand originates directly from customer demand.", "Independent demand is determined by market demand, while dependent demand is derived from it.", "Both are determined by suppliers."], "answer": 2, "id": "week-5-q5"}, {"week": 5, "question": "The Bill of Materials (BOM) primarily serves as:", "options": ["A financial statement", "A hierarchical listing of components needed to manufacture a product", "A quality inspection report", "A vendor evaluation document"], "answer": 1, "id": "week-5-q6"}, {"week": 5, "question": "Which MRP input specifies when finished products must be completed?", "options": ["Inventory records", "Capacity plan", "Master Production Schedule", "Routing sheet"], "answer": 2, "id": "week-5-q7"}, {"week": 5, "question": "Capacity Requirement Planning (CRP) is mainly concerned with:", "options": ["Forecasting demand", "Determining whether sufficient production capacity exists", "Designing new products", "Monitoring customer satisfaction"], "answer": 1, "id": "week-5-q8"}, {"week": 5, "question": "Which technology allows engineers to visualize and test products before physical prototypes are built?", "options": ["ERP", "SPC", "CAD", "CRM"], "answer": 2, "id": "week-5-q9"}, {"week": 5, "question": "A major advantage of additive manufacturing over traditional manufacturing is:", "options": ["Elimination of all design costs", "Rapid prototyping with minimal tooling", "Reduced need for digital designs", "Lower computing requirements"], "answer": 1, "id": "week-5-q10"}, {"week": 6, "question": "The primary objective of a Marketing Information System (MKIS) is to:", "options": ["Automate payroll processing", "Support marketing decision-making through relevant information", "Manage production schedules", "Monitor employee attendance"], "answer": 1, "id": "week-6-q1"}, {"week": 6, "question": "In the marketing research process, data collection should occur:", "options": ["Before deﬁning the problem", "After implementing recommendations", "After deﬁning objectives and research questions", "Before identifying information needs"], "answer": 2, "id": "week-6-q2"}, {"week": 6, "question": "Which subsystem continuously scans the external environment for information on competitors and market trends?", "options": ["Internal Reports Subsystem", "Marketing Intelligence Subsystem", "Pricing Subsystem", "Sales Forecasting Subsystem"], "answer": 1, "id": "week-6-q3"}, {"week": 6, "question": "A company uses customer demographics, purchasing history, and psychographic data to identify target segments. This information comes primarily from:", "options": ["Customer databases", "Payroll records", "SPC systems", "Capacity planning systems"], "answer": 0, "id": "week-6-q4"}, {"week": 6, "question": "Which forecasting method relies most heavily on historical sales patterns?", "options": ["Delphi technique", "Scenario planning", "Time-series analysis", "Expert panels"], "answer": 2, "id": "week-6-q5"}, {"week": 6, "question": "The greatest advantage of Sales Force Automation is:", "options": ["Eliminating customer interactions", "Instant access to organizational information during selling activities", "Replacing marketing research", "Reducing product quality costs"], "answer": 1, "id": "week-6-q6"}, {"week": 6, "question": "Before a sales order is confirmed, organizations commonly perform:", "options": ["Employee screening", "Credit veriﬁcation", "Vendor rating", "Capacity auditing"], "answer": 1, "id": "week-6-q7"}, {"week": 6, "question": "Which activity immediately follows picking and packing in the sales distribution process?", "options": ["Recruitment", "Payroll approval", "Transportation and shipment arrangement", "Vendor evaluation"], "answer": 2, "id": "week-6-q8"}, {"week": 6, "question": "The primary purpose of Accounts Receivable is to:", "options": ["Manage supplier payments", "Track money owed by customers", "Maintain payroll records", "Monitor inventory"], "answer": 1, "id": "week-6-q9"}, {"week": 6, "question": "A customer returns damaged goods after invoicing. Which accounting document is most likely generated?", "options": ["Debit note", "Purchase requisition", "Inspection certiﬁcate", "Credit note"], "answer": 3, "id": "week-6-q10"}, {"week": 7, "question": "Business strategy is a function of:", "options": ["Competition, Positioning, and Capabilities", "Hardware, Software, and Data", "Revenue, Cost, and Proﬁt", "Customers, Vendors, and Employees"], "answer": 0, "id": "week-7-q1"}, {"week": 7, "question": "Which model is used for organizational design?", "options": ["SWOT Matrix", "Business Diamond", "BCG Matrix", "Ansoﬀ Matrix"], "answer": 1, "id": "week-7-q2"}, {"week": 7, "question": "The Business Diamond consists of:", "options": ["Finance, Marketing, HR, Operations", "Hardware, Software, Network, Data", "People, Structure, Tasks, Information Control", "Cost, Quality, Time, Flexibility"], "answer": 2, "id": "week-7-q3"}, {"week": 7, "question": "Which is NOT an IS infrastructure component?", "options": ["Hardware", "Software", "Network", "Advertising"], "answer": 3, "id": "week-7-q4"}, {"week": 7, "question": "Changing one corner of the IS Strategy Triangle requires:", "options": ["No action", "Evaluating the other two corners", "Hiring more staﬀ", "Increasing proﬁts"], "answer": 1, "id": "week-7-q5"}, {"week": 7, "question": "Strategic Systems Analysis examines:", "options": ["Industry structure and competitive forces", "Employee attendance only", "Payroll systems only", "Accounting records only"], "answer": 0, "id": "week-7-q6"}, {"week": 7, "question": "Balanced Scorecard (BSC) focuses on:", "options": ["Only ﬁnancial performance", "Four dimensions of performance", "Employee salaries", "Product prices only"], "answer": 1, "id": "week-7-q7"}, {"week": 7, "question": "Which is NOT one of the four BSC dimensions?", "options": ["Customer", "Financial", "Business Process", "Manufacturing Capacity"], "answer": 3, "id": "week-7-q8"}, {"week": 7, "question": "KPIs in a BSC are:", "options": ["Key Performance Indicators", "Knowledge Processing Instructions", "Key Product Integrators", "Knowledge Performance Interfaces"], "answer": 0, "id": "week-7-q9"}, {"week": 7, "question": "BSC helps managers focus on:", "options": ["Strategic vision", "Oﬃce administration only", "Accounting entries only", "Legal compliance only"], "answer": 0, "id": "week-7-q10"}, {"week": 8, "question": "E-commerce refers to:", "options": ["Physical transactions only", "Digitally enabled commercial transactions involving exchange of value", "Internal organizational communication", "Manufacturing automation"], "answer": 1, "id": "week-8-q1"}, {"week": 8, "question": "Which feature of e-commerce allows access to markets anytime and anywhere?", "options": ["Richness", "Interactivity", "Ubiquity", "Customization"], "answer": 2, "id": "week-8-q2"}, {"week": 8, "question": "The ability of e-commerce to reach across national boundaries is known as:", "options": ["Information density", "Global reach", "Personalization", "Interactivity"], "answer": 1, "id": "week-8-q3"}, {"week": 8, "question": "Information density in e-commerce means information is:", "options": ["Limited and costly", "Plentiful, cheap, and accurate", "Only available to ﬁrms", "Diﬃcult to access"], "answer": 1, "id": "week-8-q4"}, {"week": 8, "question": "Adjusting marketing messages based on a customer's clickstream behavior is called:", "options": ["Customization", "Segmentation", "Personalization", "Automation"], "answer": 2, "id": "week-8-q5"}, {"week": 8, "question": "Changing a delivered product based on user preferences is known as:", "options": ["Personalization", "Customization", "Standardization", "Diversiﬁcation"], "answer": 1, "id": "week-8-q6"}, {"week": 8, "question": "Amazon is an example of which type of e-commerce?", "options": ["B2B", "C2C", "B2C", "G2C"], "answer": 2, "id": "week-8-q7"}, {"week": 8, "question": "IndiaMART is primarily an example of:", "options": ["B2B e-commerce", "C2C e-commerce", "Social commerce", "Mobile commerce"], "answer": 0, "id": "week-8-q8"}, {"week": 8, "question": "Which of the following is a major challenge in e-commerce?", "options": ["Global reach", "Personalization", "Trust issues", "Richness"], "answer": 2, "id": "week-8-q9"}, {"week": 8, "question": "Which key element of a business model answers “How to earn money?”", "options": ["Market strategy", "Competitive advantage", "Revenue model", "Market opportunity"], "answer": 2, "id": "week-8-q10"}, {"week": 9, "question": "Which of the following is not a benefit of cloud computing?", "options": ["Usage-based pricing", "Resource Pooling", "Increased Set-up Time", "Measured Use"], "answer": 2, "id": "week-9-q1"}, {"week": 9, "question": "Salesforce.com’s CRM software is an example of which cloud service model?", "options": ["IaaS", "PaaS", "SaaS", "DaaD"], "answer": 2, "id": "week-9-q2"}, {"week": 9, "question": "FinTech Solutions Inc. is developing a new customer -facing analytics portal. To accelerate their release timeline, they decide to use a cloud -based environment where the vendor hosts the runtime, libraries, testing tools, and plugins. To securely expose this platform's API to their internal network, they implement cloud-native security groups, web application firewalls, and encrypted virtual private cloud (VPC) peering. Which cloud service model is FinTech Solutions utilizing for this analytics portal, and who is fundamentally responsible for ensuring the availability, bandwidth, and security at the hypervisor layer?", "options": ["PaaS; The Cloud Vendor is responsible for the underlying infrastructure capacity, virtual networking, and hypervisor security.", "PaaS; The Cli ent manages the physical hardware, while the Cloud Vendor manages capacity.", "SaaS; The Cloud Vendor manages only the application logic, while the Client manages all security and networking.", "SaaS; The Cloud Vendor and Client share the hypervisor layer responsibility."], "answer": 0, "id": "week-9-q3"}, {"week": 9, "question": "GlobalHealth Inc. uses its own dedicated, single -tenant servers to securely store highly sensitive patient data. To handle unpredictable spikes in public appointment bookings, the company temporarily offloads web traffic to a globally shared network. What cloud deployment model does GlobalHealth Inc. utilize?", "options": ["Public cloud", "Community cloud", "Private cloud", "Hybrid cloud"], "answer": 3, "id": "week-9-q4"}, {"week": 9, "question": "Tools or mechanisms that can change their own state and/or the state of other devices and machines are called _______________.", "options": ["Sensors", "IoT", "Actuators", "Proximity Sensor"], "answer": 2, "id": "week-9-q5"}, {"week": 9, "question": "Which of the following best describes the core approach of Privacy by Design?", "options": ["Applying privacy settings as an optional add-on near the end of a project's development", "Proactively considering privacy objectives from the start and throughout the design and delivery", "Reacting to data breaches by applying immediate remedial software patches", "Allowing users to manually select every privacy feature from a complex menu"], "answer": 1, "id": "week-9-q6"}, {"week": 9, "question": "What is the primary function of a sensor in an IoT system?", "options": ["To convert an electrical signal into a physical action", "To capture environmental data and convert it into an electrical signal", "To store massive amounts of data in the cloud", "To provide power to the IoT device"], "answer": 1, "id": "week-9-q7"}, {"week": 9, "question": "Which of the following statements accurately describes an Outsourced Private Cloud?", "options": ["It is implemented solely within the customer's own premises.", "The server side is managed by a hosting company.", "It is designed and shared to serve the general public.", "The infrastructure is always owned and operated by the customer's internal IT team."], "answer": 1, "id": "week-9-q8"}, {"week": 9, "question": "A retail e-commerce giant is consolidating multiple distinct data streams from their 2026 Black Friday campaign to predict consumer churn. They aggregate: Stream A: Real-time customer heartbeats and biometric data streams from wearable synced smartwatches (binary files and sensor signals). Stream B: Text reviews, complaints, and emojis posted across multiple social media platforms. Stream C: Structured relational transaction logs (JSON and SQL format). During the analysis, the data engineering team discovers that 15% of the smartwatch streams have missing timestamp intervals and that 20% of the social media data is generated by spam bots misrepresenting product satisfaction. Which of the following best diagnoses the system's challenges by correctly applying the concepts of Variety and Veracity?", "options": ["The integration of wearable devices , social media, and transactional logs represents a Variety challenge, while timestamp gaps and spam bots represent a Veracity challenge.", "The data format differences between binary files, text, and JSON represent a Veracity challenge, while missing timestamps in the wearable data represent a Variety challenge", "The integration of different platforms (sensors, social media, SQL) represents a Veracity challenge, while the presence of bot spam and missing intervals both strictly represent Variety issues", "Both the format differences (Stream A, B, C) and the missing intervals are examples of Variety, whereas the presence of bot spam is an example of Veracity."], "answer": 0, "id": "week-9-q9"}, {"week": 9, "question": "Which among the following is a cloud service provider?", "options": ["Netflix", "JioHotstar", "Reliance Digital", "DigitalOcean"], "answer": 3, "id": "week-9-q10"}, {"week": 10, "question": "____________ is the collective and individual experience of applying knowledge to the solution of problem; knowing when, where, and how to apply that knowledge.", "options": ["Cognition", "Wisdom", "Tacit", "Culture"], "answer": 1, "id": "week-10-q1"}, {"week": 10, "question": "A retail manager uses an IT system that instantly pulls historical sales data and expert staff insights to determine the best price for a new product line. Which system is being used to practically apply organizational knowledge and add ROI to this decision?", "options": ["Transaction Processing System", "Office Automation System", "Supply Chain Management System", "Decision Support System (DSS)"], "answer": 3, "id": "week-10-q2"}, {"week": 10, "question": "Which of the following best describes a primary difference between a Neural Network and a Genetic Algorithm in organizational knowledge management?", "options": ["Genetic Algorithms are used to discover hidden pat terns in data, whereas Neural Networks are used to evaluate alternative solutions.", "Neural Networks are used to discover patterns in data, whereas Genetic Algorithms are used to evaluate and optimize alternative solutions.", "Neural Networks rely on Darwinian evolution, while Genetic Algorithms rely on human nervous system models.", "Both act identically but process data sequentially rather than in parallel."], "answer": 1, "id": "week-10-q3"}, {"week": 10, "question": "Which scenario best illustrates a semi-structured decision type?", "options": ["Adjusting the monthly production output purely according to historical seasonal sales data.", "Formulating an annual corporate budget by rigidly enforcing standard inflation- adjusted formulas.", "Determining the most cost- effective customized delivery route for a new, irregul arly shaped geographical zone.", "Approving a standard expense report that strictly complies with the published company travel policy."], "answer": 2, "id": "week-10-q4"}, {"week": 10, "question": "Which of the following is not a phase in a decision-making process?", "options": ["Intelligence", "Design", "Choice", "Scope"], "answer": 3, "id": "week-10-q5"}, {"week": 10, "question": "According to the principles of Management Information Systems, which type of decisions do Executive Support Systems (ESS) primarily address?", "options": ["Routine and highly structured operational decisions", "Non-routine decisions requiring judgment, evaluation, and insight", "Strictly day-to-day tactical management decisions", "Pre-programmed, repetitive transaction processing"], "answer": 1, "id": "week-10-q6"}, {"week": 10, "question": "Which of the following statements best defines object -based knowledge representation for expert systems?", "options": ["Knowledge is represented as simple true/false statements without any attached data.", "Knowledge is represented as a network of objects, where each object contains both data and the methods that act on that data.", "Knowledge is strictly stored as a sequential list of procedural algorithms.", "Knowledge is represented purely through unstructured text files."], "answer": 1, "id": "week-10-q7"}, {"week": 10, "question": "A local hospital is using an AI expert system to help emergency doctors diagnose patients with severe respiratory distress. When a patient arrives, the doctor first inputs specific symptoms (e.g., sudden fever, dry cough, and shortness of breath) into the system. The inference engine immediately analyzes these available facts, checks them against thousands of n ested medical rules, and progressively infers potential conditions and treatment options until it derives a set of probable diagnoses. Based on how the inference engine processes the data, which reasoning strategy is the system using?", "options": ["Backward Chaining", "Goal-Driven Analysis", "Breadth-First Deductive Reasoning", "Forward Chaining"], "answer": 3, "id": "week-10-q8"}, {"week": 10, "question": "What do the letters in the acronym MOODLE stand for?", "options": ["Modern Object-Oriented Dynamic Learning Environment", "Modular Object-Oriented Dynamic Learning Environment", "Managed Open Online Distance Learning Experience", "Modular Open Online Digital Learning Engine"], "answer": 1, "id": "week-10-q9"}, {"week": 10, "question": "Which type of managerial decision is routine, repetitive, and follows a predefined set of rules or standard operating procedures?", "options": ["Semi-structured", "Unstructured", "Structured", "Analytical"], "answer": 2, "id": "week-10-q10"}, {"week": 11, "question": "Which of the following statements regarding the Right to Privacy is false?", "options": ["It involves the right to be left alone and free from unreasonable personal intrusions.", "It is an absolute right that takes total precedence over the needs of society.", "It must be balanced against the broader needs and interests of society.", "The public’s right to know is often considered superior to an individual’s right to privacy."], "answer": 1, "id": "week-11-q1"}, {"week": 11, "question": "What are computer cookies, as described in web technology?", "options": ["Small text files deposited on a computer’s hard drive to identify and track visits", "Hidden software applications that delete a user’s browsing history", "Programs used by hackers to steal personal passwords", "Temporary internet cables that connect to web servers"], "answer": 0, "id": "week-11-q2"}, {"week": 11, "question": "Zenith Corp implements a new Information System (IS) that tracks keystrokes, active window times, and web browsing habits. During the rollout, management announces that the system will generate random, automated performance audits, but the exact tracking schedule is kept strictly confidential. Initially, a few remote workers attempt to browse non -work-related websites during business hours. However, reali sing the logging software could be recording their activity at any given minute, employees bega n limiting their computer use strictly to corporate tasks. Which of the following best explains why Zenith Corp employees consistently conform to company policies despite the lack of a visible or constant human supervisor?", "options": ["Hawthorne Effect", "The Panopticon Effect", "Groupthink", "Cognitive Dissonance"], "answer": 1, "id": "week-11-q3"}, {"week": 11, "question": "Which of the following best describes the primary objective and function of a Man -in-the- Middle attack?", "options": ["It overloads a target server’s resources to cause a sudden disruption in legitimate user access.", "It secretly intercepts, reads, and potent ially alters communications between a sender and a recipient without their knowledge.", "It tricks users into downloading and installing malicious software disguised as legitimate applications.", "It guesses passwords by systematically trying thousands of combinations until the correct one is found."], "answer": 1, "id": "week-11-q4"}, {"week": 11, "question": "Which of the following cyber threats uses manipulative communication—such as bogus emails or messages—as its primary delivery method to steal an identity?", "options": ["Pharming", "DNS Cache Poisoning", "Malware Encryption", "Phishing"], "answer": 3, "id": "week-11-q5"}, {"week": 11, "question": "Which of the following is the full form of VPN?", "options": ["Visual Private Network", "Virtual Private Node", "Virtual Private Network", "Visual Private Node"], "answer": 2, "id": "week-11-q6"}, {"week": 11, "question": "A major server outage brings down the primary database for GlobalTech Solutions, instantly preventing their customer service team from accessing client records. While the IT department works on restoring the servers from the latest backup, the management team activates a backup procedure allowing agents to manually process urgent client requests using printed logs and temporary phone lines. In this scenario, which plans were demonstrated by the IT department and the management team, respectively?", "options": ["Both the IT team and management demonstrated the Disaster Recovery Plan (DRP)", "Both the IT team and management demonstrated the Business Continuity Plan (BCP)", "The IT team demonstrated the Business Continuity Plan (BCP) , and management demonstrated the Disaster Recovery Plan (DRP)", "The IT team demonstrated the Disaster Recovery Plan (DRP) , and management demonstrated the Business Continuity Plan (BCP)"], "answer": 3, "id": "week-11-q7"}, {"week": 11, "question": "Which of the following is a primary requirement for financi al institutions under the Gramm- Leach-Bliley Act (GLBA) regarding customer data?", "options": ["To publicly disclose all customer account balances in a quarterly directory.", "To ensure the security and confidentiality of customer non-public personal information.", "To share customer financial data with unaffiliated third parties by default.", "To destroy all customer financial records after one year of inactivity."], "answer": 1, "id": "week-11-q8"}, {"week": 11, "question": "Which of the following is not considered a primary problem or objective address ed by computer forensics?", "options": ["Recovering data from computers while preserving evidential integrity", "Finding significant information in a large volume of electronic data", "Altering recovered data to better suit a specific court argument", "Presenting the information to a court of law"], "answer": 2, "id": "week-11-q9"}, {"week": 11, "question": "Which of the following is one of the leading Unified Threat Management (UTM) vendors?", "options": ["Fortinent", "McAfee", "Trend Micro", "Symantec"], "answer": 0, "id": "week-11-q10"}, {"week": 12, "question": "Which of the following is not a characteristic of a global organization?", "options": ["Large-scale operations", "A large number of middlemen", "Multi-Language, Mono-Cultural", "High risk"], "answer": 2, "id": "week-12-q1"}, {"week": 12, "question": "What is the very first step a firm must take when developing an International Information Systems Architecture?", "options": ["Designing new business procedures and reengineering", "Understanding the global environment and business drivers", "Developing the corporate global strategy", "Selecting the appropriate technology platform"], "answer": 1, "id": "week-12-q2"}, {"week": 12, "question": "GlobalTech Inc. is a global electronics manufacturer. Originally, its US headquarters made all product and marketing decisions, giving overseas branches very little freedom. Recently, the company restructured so that its subsidiaries in Japan, Germany, and India operate as highly integrated yet independent units. These local branches now have the autonomy to design specific products and marketing campaigns tailored to their own cultures, while still sharing global operational efficiencies. Based on the transition described, which of the following best represents the shift in GlobalTech Inc.'s organizational strategy?", "options": ["From a Domestic Exporter to a Franchiser", "From a Transnational Corporation to a Multinational Corporation", "From a Franchiser to a Domestic Exporter", "From a Multinational Corporation to a Transnational Corporation"], "answer": 3, "id": "week-12-q3"}, {"week": 12, "question": "An international bank's fraud detection engine continuously co- develops algorithms through real-time data sharing between teams in New York, London, and Tokyo. Each global hub simultaneously builds local patches while immediately syncing operational updates across the entire corporate infrastructure to maintain uniform security. Which systems configuration does this corporate strategy illustrate?", "options": ["Networked", "Duplicated", "Centralized", "Decentralized"], "answer": 0, "id": "week-12-q4"}, {"week": 12, "question": "Which of the following activities falls under the category of “back office functions”?", "options": ["Catering for railway passengers", "Advisory services for external clients", "Training and R&D", "Procurement of raw materials for production"], "answer": 2, "id": "week-12-q5"}, {"week": 12, "question": "Match each concept (column A) with the correct description (column B). Concept (A) Description (B) 1. Resource sharing A) Shifting non -core functions and key processes to external third -party providers for cost -efficiency and agility. 2. Centralization of services B) Relocating multiple delivery sites or services to a single location (world-wide or continent-level) to serve the entire organization. 3. Joint Venture C) Establishing a separate stand -alone entity to share the costs and risks of providing specific goods or services. 4. Outsourcing D) Utilizing the plant, equipment, or personnel of individual country branches to deliver value for other group companies.", "options": ["1–D, 2–B, 3–A, 4–C", "1–B, 2–A, 3–C, 4–D", "1–D, 2–B, 3–C, 4–A", "1–A, 2–B, 3–C, 4–D"], "answer": 2, "id": "week-12-q6"}, {"week": 12, "question": "During which transition activity are project records, manuals, and reports stored and handed over to the support team?", "options": ["Human resource transition", "Project documentation transition", "Infrastructure transition", "Financial transition"], "answer": 1, "id": "week-12-q7"}, {"week": 12, "question": "Which of the following represents the correct categorization of a Continuous Improvement activity within an outsourced support framework?", "options": ["Root Cause Analysis", "Value Realization", "Evaluate learning effectiveness", "Deliver continuous End User Training"], "answer": 1, "id": "week-12-q8"}, {"week": 12, "question": "Breakthroughs in transportation and telecommunication costs belong to which era of globalization?", "options": ["Globalization 1.0", "Globalization 2.0", "Globalization 3.0", "None of these"], "answer": 1, "id": "week-12-q9"}, {"week": 12, "question": "In the context of Thomas Friedman’s “Flat World” theory, how does “In -forming” primarily benefit global corporations and individuals?", "options": ["By restricting public access to corporate data to maintain a competitive advantage.", "By replacing traditional human resources entirely with artificial intelligence.", "By automating the physical assembly and manufacturing of products in overseas factories.", "By providing everyone with the tools to build a personal information supply chain, democratising access to global knowledge."], "answer": 3, "id": "week-12-q10"}];
+    const WEEK_TITLES = {
+      1: "MIS Basics", 2: "Data & Databases", 3: "ERP & SAP",
+      4: "Supply Chain Management", 5: "Manufacturing Systems", 6: "Marketing & Sales",
+      7: "Strategy & Scorecards", 8: "E-commerce", 9: "Cloud & IoT",
+      10: "Knowledge & Decisions", 11: "Privacy & Security", 12: "Global Systems"
+    };
+    const $ = (id) => document.getElementById(id);
+    let selectedWeek = 1;
+    let sessionQuestions = [];
+    let questionIndex = 0;
+    let score = 0;
+    let answered = false;
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+    function showView(view) {
+      ["home", "quiz", "results"].forEach(id => $(id).classList.toggle("hidden", id !== view));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    function renderWeekCards() {
+      const grid = $("weekGrid");
+      grid.innerHTML = "";
+      for (let week = 1; week <= 12; week++) {
+        const card = document.createElement("button");
+        card.className = "week-card";
+        card.innerHTML = `<div class="week-top"><span class="week-number">WEEK ${String(week).padStart(2,"0")}</span><span class="week-arrow">↗</span></div><div class="week-title">${WEEK_TITLES[week]}</div><div class="week-meta">10 MCQs · Practice set</div>`;
+        card.addEventListener("click", () => startQuiz(week));
+        grid.appendChild(card);
+      }
+      const all = document.createElement("div");
+      all.className = "all-card";
+      all.innerHTML = `<div><strong>Practice all 120 questions</strong><span>One complete revision round across all 12 weeks.</span></div><button class="btn btn-primary" id="allWeeksBtn">Start full practice →</button>`;
+      grid.appendChild(all);
+      $("allWeeksBtn").addEventListener("click", () => startQuiz("all"));
+    }
+    function startQuiz(week) {
+      selectedWeek = week;
+      const pool = week === "all" ? QUESTIONS : QUESTIONS.filter(q => q.week === week);
+      sessionQuestions = shuffle(pool).map(q => {
+        const mapped = q.options.map((text, index) => ({ text, isCorrect: index === q.answer }));
+        return { ...q, shuffledOptions: shuffle(mapped) };
+      });
+      questionIndex = 0;
+      score = 0;
+      answered = false;
+      showView("quiz");
+      renderQuestion();
+    }
+    function renderQuestion() {
+      const q = sessionQuestions[questionIndex];
+      answered = false;
+      $("quizWeek").textContent = selectedWeek === "all" ? "All weeks · Full practice" : `Week ${selectedWeek} · ${WEEK_TITLES[selectedWeek]}`;
+      $("quizCounter").textContent = `Question ${questionIndex + 1} of ${sessionQuestions.length}`;
+      $("scorePill").textContent = `Score: ${score}`;
+      $("progressFill").style.width = `${(questionIndex / sessionQuestions.length) * 100}%`;
+      $("qKicker").textContent = `QUESTION ${String(questionIndex + 1).padStart(2, "0")}`;
+      $("questionText").textContent = q.question;
+      $("options").innerHTML = "";
+      $("feedback").className = "feedback";
+      $("feedback").innerHTML = "";
+      $("hint").textContent = "Choose the best answer.";
+      $("nextBtn").classList.add("hidden");
+      q.shuffledOptions.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.className = "option";
+        button.innerHTML = `<span class="letter">${String.fromCharCode(65 + index)}</span><span class="option-text"></span>`;
+        button.querySelector(".option-text").textContent = option.text;
+        button.addEventListener("click", () => chooseAnswer(index));
+        $("options").appendChild(button);
+      });
+    }
+    function chooseAnswer(index) {
+      if (answered) return;
+      answered = true;
+      const q = sessionQuestions[questionIndex];
+      const chosen = q.shuffledOptions[index];
+      const buttons = [...$("options").querySelectorAll(".option")];
+      buttons.forEach((button, i) => {
+        button.disabled = true;
+        if (q.shuffledOptions[i].isCorrect) button.classList.add("correct");
+      });
+      const feedback = $("feedback");
+      if (chosen.isCorrect) {
+        score++;
+        feedback.className = "feedback show good";
+        feedback.innerHTML = "<strong>Correct! 🎉 Well done!</strong> You got it right. Keep going!";
+      } else {
+        buttons[index].classList.add("wrong");
+        const correct = q.shuffledOptions.find(o => o.isCorrect);
+        feedback.className = "feedback show bad";
+        feedback.innerHTML = `<strong>Not quite — keep going!</strong><span class="correct-answer"></span>`;
+        feedback.querySelector(".correct-answer").textContent = `Correct answer: ${correct.text}`;
+      }
+      $("scorePill").textContent = `Score: ${score}`;
+      $("hint").textContent = chosen.isCorrect ? "Great job — ready for the next one?" : "Take a moment to remember the correct answer.";
+      $("nextBtn").textContent = questionIndex === sessionQuestions.length - 1 ? "See results →" : "Next question →";
+      $("nextBtn").classList.remove("hidden");
+    }
+    function nextQuestion() {
+      if (!answered) return;
+      questionIndex++;
+      if (questionIndex >= sessionQuestions.length) showResults();
+      else renderQuestion();
+    }
+    function showResults() {
+      showView("results");
+      $("progressFill").style.width = "100%";
+      const total = sessionQuestions.length;
+      const percent = Math.round((score / total) * 100);
+      $("resultScore").textContent = `${score}/${total}`;
+      $("resultIcon").textContent = percent >= 80 ? "🎉" : percent >= 50 ? "💪" : "🌱";
+      $("resultTitle").textContent = percent >= 80 ? "Amazing work!" : percent >= 50 ? "Good effort!" : "Keep practising!";
+      $("resultText").textContent = percent >= 80
+        ? `You scored ${percent}%. You're doing great — a little more revision and you'll be ready.`
+        : percent >= 50
+          ? `You scored ${percent}%. Review the tricky ones and give it another go. You've got this.`
+          : `You scored ${percent}%. No worries — practice helps. Retry the set and see how much you improve.`;
+      $("retryBtn").textContent = "Retry & shuffle ↻";
+    }
+    $("backBtn").addEventListener("click", () => showView("home"));
+    $("nextBtn").addEventListener("click", nextQuestion);
+    $("retryBtn").addEventListener("click", () => startQuiz(selectedWeek));
+    $("homeBtn").addEventListener("click", () => showView("home"));
+    renderWeekCards();
+  </script>
+</body>
+</html>
